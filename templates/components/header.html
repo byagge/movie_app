@@ -1,0 +1,129 @@
+{% load static %}
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="header__logo">
+                    <a href="{% url 'movie_app:home' %}">
+                        <img src="{% static 'img/logo1.svg' %}" alt="Logo">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="header__nav">
+                    <nav class="header__menu mobile-menu">
+                        <ul>
+                            <li><a href="{% url 'movie_app:home' %}">Главная</a></li>
+                            <li class="active">
+                                <a href="{% url 'movie_app:categories' %}">Категории <span class="arrow_carrot-down"></span></a>
+                                <ul class="dropdown">
+                                    {% for genre in genres %}
+                                    <li><a href="{% url 'movie_app:category_detail_view' genre.slug %}">{{ genre.title }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="header__right" style="display: flex; align-items: center;">
+                    <form action="{% url 'movie_app:search' %}" method="GET" class="search-form">
+                        <input type="text" name="query" placeholder="Поиск..." class="search-input">
+                        <button type="submit" class="search-button">
+                            <span class="icon_search"></span>
+                        </button>
+                    </form>
+                    
+                    
+                    {% if user.is_authenticated %}
+                        <div class="dropdown profile-dropdown">
+                            <a href="#" class="dropdown-toggle" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="icon_profile"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown" style="background-color: #1a1a3a; border-color: #4a4a8a;">
+                                {% if user.profile and user.profile.slug %}
+                                    <a class="dropdown-item" href="{% url 'movie_app:profile' profile_slug=user.profile.slug %}" style="color: #fff; background-color: transparent;">
+                                        <i class="fa fa-user mr-2"></i>Профиль
+                                    </a>
+                                {% else %}
+                                    <a class="dropdown-item" href="{% url 'movie_app:login' %}" style="color: #fff; background-color: transparent;">
+                                        <i class="fa fa-user mr-2"></i>Профиль
+                                    </a>
+                                {% endif %}
+                                {% if user.is_authenticated and user.is_staff %}
+                                    <a class="dropdown-item" href="{% url 'movie_app:create_movie' %}" style="color: #fff; background-color: transparent;">
+                                        <i class="fa fa-gears mr-2"></i>Новый фильм
+                                    </a>
+                                {% endif %}
+                                <div class="dropdown-divider" style="border-color: #4a4a8a;"></div>
+                                <a class="dropdown-item" href="{% url 'movie_app:logout' %}" style="color: #ff4b4b; background-color: transparent;">
+                                    <i class="fa fa-sign-out mr-2"></i>Выход
+                                </a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="dropdown profile-dropdown">
+                            <a href="#" class="dropdown-toggle" id="profileDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="icon_profile"></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profileDropdown" style="background-color: #1a1a3a; border-color: #4a4a8a;">
+                                <a class="dropdown-item" href="{% url 'movie_app:login' %}" style="color: #fff; background-color: transparent;">
+                                    <i class="fa fa-sign-in mr-2"></i>Войти
+                                </a>
+                                <a class="dropdown-item" href="{% url 'movie_app:signup' %}" style="color: #fff; background-color: transparent;">
+                                    <i class="fa fa-user-plus mr-2"></i>Регистрация
+                                </a>
+                            </div>
+                        </div>
+                    {% endif %}
+ 
+                    <style>
+                        .profile-dropdown .dropdown-toggle {
+                            cursor: pointer;
+                        }
+                        .profile-dropdown .dropdown-menu {
+                            background-color: #1a1a3a !important;
+                            border: 1px solid #4a4a8a;
+                            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+                        }
+                        .profile-dropdown .dropdown-item {
+                            color: #fff !important;
+                            transition: all 0.3s ease;
+                        }
+                        .profile-dropdown .dropdown-item:hover {
+                            background-color: rgba(74,74,138,0.2) !important;
+                            color: #4a4a8a !important;
+                        }
+                        .profile-dropdown .dropdown-divider {
+                            border-color: #4a4a8a !important;
+                        }
+                    </style>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu-wrap"></div>
+    </div>
+</header>
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var dropdownToggle = document.getElementById('profileDropdown');
+        var dropdownMenu = dropdownToggle.nextElementSibling;
+        
+        dropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            dropdownMenu.classList.toggle('show');
+        });
+    
+        // Закрытие меню при клике вне его
+        window.addEventListener('click', function(e) {
+            if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    });
+</script>
+

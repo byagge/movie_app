@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>404 - Страница не найдена</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #070720, #0b0c2a);
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .error-container {
+            background: rgba(11, 12, 42, 0.8);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 800px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.3);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .error-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, transparent, transparent, #fff);
+            animation: rotate 4s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 150px;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(255,255,255,0.3);
+        }
+
+        .error-subtitle {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: rgba(255,255,255,0.7);
+            font-style: italic;
+        }
+
+        .quote {
+            font-size: 22px;
+            margin: 30px 0;
+            color: #fff;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.8;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote::before, .quote::after {
+            content: '"';
+            font-size: 50px;
+            color: rgba(255,255,255,0.3);
+            position: absolute;
+        }
+
+        .quote::before {
+            left: 0;
+            top: -10px;
+        }
+
+        .quote::after {
+            right: 0;
+            bottom: -30px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255,255,255,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .error-title {
+                font-size: 100px;
+            }
+            .error-subtitle, .quote {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-title">404</h1>
+        <p class="error-subtitle">Кажется, вы попали в параллельную вселенную</p>
+        
+        <div class="quote" id="random-quote"></div>
+        
+        <div class="button-container">
+            <a href="{% url 'movie_app:home' %}" class="btn">Вернуться домой</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'movie_app:home' %}" class="btn">Продолжить просмотр</a>
+            {% endif %}
+            <a href="{% url 'movie_app:home' %}" class="btn">Показать рекомендации</a>
+        </div>
+    </div>
+
+    <script>
+        // Твой словарь цитат остается прежним
+        const errorQuotes = {
+            1: "Ваша страница исчезла, как герои в конце 'Мстителей'.",
+            2: "Как говорит Гендальф: 'Вы не пройдёте!' — хотя мы старались.",
+            3: "Страница затерялась где-то в 'Интерстелларе'.",
+            4: "Джон Сноу ничего не знает о вашей странице.",
+            5: "Мы искали страницу по всем следам Шерлока, но она исчезла.",
+            6: "Эта страница — как первый бой Рокки, мы её не нашли.",
+            7: "Похоже, страница ушла за Волан-де-Мортом и больше не вернётся.",
+            8: "Как говорил Терминатор: 'I'll be back' — но не эта страница.",
+            9: "Мы искали её в Силе, но даже Йода не смог помочь.",
+            10: "Она упала в чертоги Мория, как Балрог.",
+            11: "Это не ошибка, это альтернативная реальность, как в 'Докторе Стрэндже'.",
+            12: "Ваша страница растворилась, как Тони Старк в 'Мстителях'.",
+            13: "404: 'Чёрная Пантера' сказала, что эта страница — не её королевство.",
+            14: "Похоже, страница заблудилась в Хогвартсе.",
+            15: "Мы искали её в Матрице, но Нео не смог помочь.",
+            16: "Она исчезла, как Грета в 'Ведьмаке'.",
+            17: "Леонардо ди Каприо ищет её, как 'Оскар', но не нашёл.",
+            18: "Как сказал Дарт Вейдер: 'Я — твоя ошибка'.",
+            19: "Страница ускользнула, как Дори, забыв, куда плыть.",
+            20: "Эта страница исчезла в игре, как 'Джуманджи'.",
+            21: "404: Как будто кто-то сказал 'Книга заклинаний' и она исчезла.",
+            22: "Она ушла, как Итан Хант на своём следующем задании.",
+            23: "Как в 'Начале': мы забыли закрутить волчок, и страница исчезла.",
+            24: "Она уплыла в 'Титанике', и нам её не спасти.",
+            25: "404: 'Доктор Кто' сказал, что страница потеряна во времени.",
+            26: "Как сказал Джокер: 'Почему так серьёзно? Она просто исчезла.'",
+            27: "404: Даже Шрек не нашёл её в своём болоте.",
+            28: "Похоже, она скрылась, как тайный агент Джеймс Бонд.",
+            29: "Как в 'Гарри Поттере': 'Страница недоступна. Репарро не помогло.'",
+            30: "Эта страница испарилась, как загадки в 'Острове проклятых'."
+        };
+
+
+        function getRandomQuote() {
+            const quoteKeys = Object.keys(errorQuotes);
+            const randomKey = quoteKeys[Math.floor(Math.random() * quoteKeys.length)];
+            return errorQuotes[randomKey];
+        }
+
+        document.getElementById('random-quote').textContent = getRandomQuote();
+    </script>
+</body>
+</html>

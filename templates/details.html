@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Movie Template">
+    <meta name="keywords" content="Movies, Django, Template, HTML">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ movie.title }} | Details</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/plyr.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}" type="text/css">
+
+    <style>
+    .flag-icon {
+        width: 1.2em;      /* Размер относительно текущего шрифта */
+        height: 1.2em;     /* Квадратное соотношение сторон */
+        vertical-align: middle; /* Выравнивание по середине текста */
+        margin-left: 0.3em; /* Небольшой отступ слева */
+        border-radius: 2px; /* Легкая скругленность углов */
+        object-fit: cover; /* Корректное масштабирование изображения */
+    }
+</style>
+</head>
+
+<body>
+    <!-- Page Preloader -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header Section Begin -->
+    {% include 'components/header.html' %}
+    <!-- Header End -->
+
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'movie_app:home' %}"><i class="fa fa-home"></i> Главная</a>
+                        <a href="#">Категории</a>
+                        <span>{{ movie.genre.all.0.title }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+
+    <!-- Anime Section Begin -->
+    <section class="anime-details spad">
+        <div class="container">
+            <div class="anime__details__content">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="anime__details__pic set-bg" data-setbg ="{{ movie.poster }}">
+                            <div class="comment"><i class="fa fa-comments"></i> {{ movie.comments.count }}</div>
+                            <div class="view"><i class="fa fa-eye"></i> {{ movie.popularity }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="anime__details__text">
+                            <div class="anime__details__title">
+                                <h3>{{ movie.title }}</h3>
+                            </div>
+                            <div class="anime__details__rating">
+                                <div class="rating">
+                                    {% for star in movie_stars %}
+                                        <a href="#"><i class="fa {{ star }}"></i></a>
+                                    {% endfor %}
+                                </div>
+                                <span>{{ movie.vote_average }} / 5</span>
+                            </div>
+                            <span style="color: grey;">ОПИСАНИЕ:</span>
+                            <p>{{ movie.overview }}</p>
+                            <div class="anime__details__widget">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6">
+                                        <ul>
+                                            <li><span>Дата релиза:</span> {{ movie.release_date }}</li>
+                                            <li><span>Статус:</span> {{ movie.is_active }}</li>
+                                            <li><span>Жанр:</span>
+                                                {% for genre in movie.genre.all %}
+                                                    {{ genre.title }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-lg-6 col-md-6">
+                                        <ul>
+                                            <li><span>Рейтинг:</span> {{ movie.vote_average }}/10</li>
+                                            <li>
+                                                <span>Язык:</span> 
+                                                {% if movie.language == 'ru' %}
+                                                    <img src="/static/img/flags/ru-ru.png" alt="Russian flag" class="flag-icon">
+                                                {% elif movie.language == 'en-us' %}
+                                                    <img src="/static/img/flags/en-us.png" alt="USA flag" class="flag-icon">
+                                                {% elif movie.language == 'en' %}
+                                                    <img src="/static/img/flags/en-uk.png" alt="UK flag" class="flag-icon">
+                                                {% elif movie.language == 'es' %}
+                                                    <img src="/static/img/flags/es-es.png" alt="Spanish flag" class="flag-icon">
+                                                {% elif movie.language == 'fr' %}
+                                                    <img src="/static/img/flags/fr-fr.png" alt="French flag" class="flag-icon">
+                                                    {% elif movie.language == 'te' or movie.language == 'hi' %}
+                                                    <img src="/static/img/flags/te-hd.png" alt="Indian flag" class="flag-icon">
+                                                {% elif movie.language == 'ua' %}
+                                                    <img src="/static/img/flags/ua-ua.png" alt="Ukrainian flag" class="flag-icon">
+                                                {% else %}
+                                                    {{ movie.language }}
+                                                {% endif %}
+                                            </li>
+                                            <li><span>Оценок:</span> {{ movie.popularity }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="anime__details__btn">
+                                <a href="{% url 'movie_app:watching' movie.slug %}" class="watch-btn"><span>СМОТРЕТЬ СЕЙЧАС</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-lg-8 col-md-8">
+                        <div class="anime__details__review">
+                            <div class="section-title">
+                                <h5>Комментарии</h5>
+                            </div>
+                            {% for review in movie_comments %}
+                            <div class="anime__review__item">
+                                <div class="anime__review__item__pic">
+                                    <img src="{% static 'img/default-avatar.webp' %}" alt="">
+                                </div>
+                                <div class="anime__review__item__text">
+                                    <h6>{{ review.user.username }} - <span>{{ review.created_at|timesince }} назад  </span></h6>
+                                    <p>{{ review.comment }}</p>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <p>Никто не оставил комментарии, будьте первым!</p>
+                            {% endfor %}
+                        
+                            <!-- Пагинация -->
+                            <div class="pagination">
+                                <span class="step-links">
+                                    {% if movie_comments.has_previous %}
+                                        <a href="?page=1">&laquo; Первая страница</a>
+                                        <a href="?page={{ movie_comments.previous_page_number }}">Предыдущая</a>
+                                    {% endif %}
+                        
+                                    <span class="current" style="color: #c5c5c5;">
+                                        Страница {{ movie_comments.number }} из {{ movie_comments.paginator.num_pages }}.
+                                    </span>
+                        
+                                    {% if movie_comments.has_next %}
+                                        <a href="?page={{ movie_comments.next_page_number }}">Следующая</a>
+                                        <a href="?page={{ movie_comments.paginator.num_pages }}">Последняя страница &raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="anime__details__form">
+                            <div class="section-title">
+                                <h5>Напишите ваше мнение:</h5>
+                            </div>
+                            
+                            {% if form.errors %}
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        {% for field in form %}
+                                            {% for error in field.errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        {% endfor %}
+                                        {% for error in form.non_field_errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            
+                            {% if user.is_authenticated %}
+                                <form action="{% url 'movie_app:movie_detail_view' movie.slug %}" method="POST">
+                                    {% csrf_token %}
+                                    <textarea name="comment" placeholder="Напиши ваше мнение..." required></textarea>
+                                    <button type="submit"><i class="fa fa-location-arrow"></i> Отправить</button>
+                                </form>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    <p><a href="{% url 'movie_app:login' %}">Войдите</a> чтобы оставить комментарий.</p>
+                                </div>
+                            {% endif %}
+                        </div>
+                    
+                </div>
+            </div>
+        </section>
+        <!-- Anime Section End -->
+
+        <!-- Footer Section Begin -->
+        {% include 'components/footer.html' %}
+        <!-- Footer Section End -->
+
+        <!-- Js Plugins -->
+        <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/player.js' %}"></script>
+        <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+        <script src="{% static 'js/mixitup.min.js' %}"></script>
+        <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+        <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+    </body>
+</html>

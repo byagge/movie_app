@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAX | Главная страница</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}">
+    <link rel="stylesheet" href="{% static 'css/plyr.css' %}">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+</head>
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+        <p class="quote" id="quote" style="font-size: 16px; color: #fff; text-align: center; position: relative; top: 500px"></p>
+    </div>
+    
+
+    {% include 'components/header.html' %}
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero__slider owl-carousel">
+                {% for movie in latest_movies %}
+                <div class="hero__items set-bg" data-setbg="{{ movie.poster }}">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <div class="label">{{ movie.genre.all.0.title }}</div>
+                                <h2>{{ movie.title }}</h2>
+                                <p>{{ movie.overview|truncatewords:20 }}</p>
+                                <a href="{% url 'movie_app:movie_detail_view' movie.slug %}">
+                                    <span>Смотреть сейчас</span> 
+                                    <i class="fa fa-angle-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="popular__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Популярные</h4>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                <div class="btn__all">
+                                    <a href="{% url 'movie_app:populars' %}" class="primary-btn">Посмотреть все</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            {% for movie in popular_movies|slice:":6" %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ movie.poster }}">
+                                        <div class="ep">{{ movie.vote_average }} / 5,0</div>
+                                        <div class="view"><i class="fa fa-eye"></i> {{ movie.popularity }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for genre in movie.genre.all %}
+                                            <li>{{ genre.title }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="{% url 'movie_app:movie_detail_view' movie.slug %}">{{ movie.title }}</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="recent__product">
+                        <div class="row">
+                            <div class="col-lg-8 col-md-8 col-sm-8">
+                                <div class="section-title">
+                                    <h4>Новые</h4>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            {% for movie in last_movies|slice:":6" %}
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="product__item">
+                                    <div class="product__item__pic set-bg" data-setbg="{{ movie.poster }}">
+                                        <div class="ep">{{ movie.vote_average }} / 5,0</div>
+                                        <div class="view"><i class="fa fa-eye"></i> {{ movie.popularity }}</div>
+                                    </div>
+                                    <div class="product__item__text">
+                                        <ul>
+                                            {% for genre in movie.genre.all %}
+                                            <li>{{ genre.title }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                        <h5><a href="{% url 'movie_app:movie_detail_view' movie.slug %}">{{ movie.title }}</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'components/footer.html' %}
+    {% include 'components/random_movie_button.html' %}
+    
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

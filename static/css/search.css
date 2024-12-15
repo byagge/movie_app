@@ -1,0 +1,77 @@
+/* Стиль для формы поиска */
+.search-form {
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Стиль для поля ввода */
+.search-input {
+    border: none;
+    outline: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 50px;
+    width: 250px;
+    transition: width 0.3s ease;
+    background-color: #ffffff;
+}
+
+/* Эффект при фокусе на поле ввода */
+.search-input:focus {
+    width: 300px;
+    background-color: #f9f9f9;
+}
+
+/* Стиль для кнопки */
+.search-button {
+    background-color: #007bff;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Эффект при наведении на кнопку */
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+/* Иконка в кнопке */
+.icon_search {
+    width: 20px;
+    height: 20px;
+    background-image: url('path_to_your_icon.png'); /* Укажите путь к вашей иконке */
+    background-size: cover;
+}
+
+
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.pagination .current {
+    font-weight: bold;
+}
+
+#quote {
+    font-size: 16px;
+    color: #fff; /* Белый текст */
+    text-align: center;
+    position: relative;
+}

@@ -1,0 +1,81 @@
+<style>
+    .random-movie-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: #e53637;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 1000;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        transition: all 0.5s ease;
+        overflow: hidden;
+        color: white;
+    }
+    
+    .random-movie-btn.expanded {
+        width: 200px;
+        border-radius: 30px;
+    }
+    
+    .random-movie-btn i {
+        font-size: 24px;
+        transition: opacity 0.3s ease;
+    }
+    
+    .random-movie-btn .random-text {
+        position: absolute;
+        opacity: 0;
+        white-space: nowrap;
+        transition: opacity 0.3s ease;
+    }
+    
+    .random-movie-btn.expanded i {
+        opacity: 0;
+    }
+    
+    .random-movie-btn.expanded .random-text {
+        opacity: 1;
+        position: relative;
+    }
+    </style>
+
+    <div class="random-movie-btn" id="randomMovieBtn" 
+         data-random-slug="{{ random_movie_slug }}">
+        <i class="fa fa-random"></i>
+        <span class="random-text">Случайный фильм</span>
+    </div>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const randomMovieBtn = document.getElementById('randomMovieBtn');
+        
+
+        function animateRandomButton() {
+            randomMovieBtn.classList.add('expanded');
+            
+            setTimeout(() => {
+                randomMovieBtn.classList.remove('expanded');
+            }, 20000);
+        }
+    
+        setTimeout(animateRandomButton, 60000);
+    
+        setInterval(animateRandomButton, 60000);
+
+        randomMovieBtn.addEventListener('click', function() {
+            const randomMovieSlug = this.getAttribute('data-random-slug');
+            
+            if (randomMovieSlug) {
+                window.location.href = `/movie/${randomMovieSlug}/`;
+            } else {
+                alert('Нет доступных фильмов');
+            }
+        });
+    });
+    </script>

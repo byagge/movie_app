@@ -1,0 +1,238 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Anime Template">
+    <meta name="keywords" content="Anime, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="{% static 'css/search.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/elegant-icons.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/plyr.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/nice-select.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+
+    <style>
+        body {
+            background-color: #0f0f2a;
+        }
+        .profile-hero {
+            background: linear-gradient(135deg, #1a1a3a 0%, #0f0f2a 100%);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            margin-top: 30px;
+        }
+        .profile__avatar {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #4a4a8a;
+            box-shadow: 0 10px 25px rgba(74,74,138,0.3);
+            transition: all 0.4s ease;
+        }
+        .profile__avatar:hover {
+            transform: scale(1.05) rotate(3deg);
+            box-shadow: 0 15px 35px rgba(74,74,138,0.5);
+        }
+        .profile-stats {
+            background-color: rgba(74,74,138,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        .stat-item {
+            text-align: center;
+            color: #fff;
+        }
+        .stat-item h4 {
+            color: #4a4a8a;
+            font-weight: bold;
+        }
+        .section-title {
+            color: #4a4a8a;
+            border-bottom: 2px solid #4a4a8a;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .comment-card {
+            background-color: rgba(255,255,255,0.05);
+            border-left: 4px solid #4a4a8a;
+            margin-bottom: 15px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+        .comment-card:hover {
+            transform: translateX(10px);
+            background-color: rgba(255,255,255,0.1);
+        }
+        .movie-watched-section {
+            background-color: rgba(74,74,138,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .movie-card {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .movie-card:hover {
+            transform: scale(1.02);
+            background-color: rgba(255,255,255,0.1);
+        }
+        .movie-poster {
+            width: 80px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 15px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .social-links a {
+            color: #4a4a8a;
+            font-size: 24px;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+        .social-links a:hover {
+            color: #fff;
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    {% include 'components/header.html' %}
+
+    <section class="profile spad">
+        <div class="container">
+            <div class="profile-hero">
+                <div class="row">
+                    <div class="col-lg-4 text-center">
+                        <img src="{{ profile.avatar.url|default:'/static/img/default-avatar.png' }}" 
+                             alt="{{ profile.user.username }}" 
+                             class="profile__avatar mb-4"
+                             onerror="this.src='{% static 'img/default-avatar.webp' %}';">
+                        
+                        <h2 style="color: #fff;">{{ profile.user.username }}</h2>
+                        <p style="color: #aaa;">{{ profile.info|default:"Нету описания профиля" }}</p>
+                        
+                        <div class="profile-stats">
+                            <div class="stat-item">
+                                <h4>{{ user_comments.paginator.count }}</h4>
+                                <span>Коменатрий</span>
+                            </div>
+                            <div class="stat-item">
+                                <h4>{{ viewed_movies.count }}</h4>
+                                <span>Просмотренных фильмов</span>
+                            </div>
+                        </div>
+
+                        <div class="social-links">
+                            {% if profile.instagram %}
+                                <a href="{{ profile.instagram }}" target="_blank"><i class="fa fa-instagram"></i></a>
+                            {% endif %}
+                            {% if profile.twitter %}
+                                <a href="{{ profile.twitter }}" target="_blank"><i class="fa fa-twitter"></i></a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="col-lg-8">
+                        <h3 class="section-title">Коментарии пользователя</h3>
+                        <div class="comments-section">
+                            {% for comment in user_comments %}
+                                <div class="comment-card">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 style="color: #4a4a8a;">{{ comment.movie.title }}</h5>
+                                        <small class="text-muted">{{ comment.created_at|date:"F d, Y" }}</small>
+                                    </div>
+                                    <p class="mt-2" style="color: #ddd;">
+                                        {{ comment.comment|default:"No comment text." }}
+                                    </p>
+                                </div>
+                            {% empty %}
+                                <p style="color: #aaa;">{{ profile.user.username }} не оставлял коментарии ранее.</p>
+                            {% endfor %}
+                        
+                            <!-- Пагинация -->
+                            <div class="pagination justify-content-center mt-4">
+                                {% if user_comments.has_previous %}
+                                    <a href="?page={{ user_comments.previous_page_number }}" class="btn btn-outline-light mr-2">Предыдущий</a>
+                                {% endif %}
+                        
+                                <span class="btn btn-light mx-2">
+                                    Page {{ user_comments.number }} of {{ user_comments.paginator.num_pages }}
+                                </span>
+                        
+                                {% if user_comments.has_next %}
+                                    <a href="?page={{ user_comments.next_page_number }}" class="btn btn-outline-light ml-2">Следующий</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="movie-watched-section">
+                            <h3 class="section-title">Просмотренные фильмы</h3>
+                            {% for viewing in viewed_movies|slice:":3" %}
+                                <div class="movie-card">
+                                    <img src="{{ viewing.movie.poster }}" class="movie-poster" alt="{{ viewing.movie.title }}">
+                                    <div>
+                                        <h5 style="color: #fff;">{{ viewing.movie.title }}</h5>
+                                        <p style="color: #aaa;">
+                                            {{ viewing.movie.genre.all|join:", " }}
+                                            <span class="ml-2 text-muted">
+                                                Watched: {{ viewing.watched_date|date:"d.m.Y" }}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p style="color: #aaa;">{{ profile.user.username }} еще не смотрел фильмы.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% include 'components/footer.html' %}
+
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/player.js' %}"></script>
+    <script src="{% static 'js/jquery.nice-select.min.js' %}"></script>
+    <script src="{% static 'js/mixitup.min.js' %}"></script>
+    <script src="{% static 'js/jquery.slicknav.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container profile-settings">
+    <div class="row">
+        <div class="col-md-10 offset-md-1">
+            <div class="card bg-dark text-white">
+                <div class="card-header">
+                    <h2 class="text-center">Настройки профиля</h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="nav flex-column nav-pills" role="tablist">
+                                <a class="nav-link active" data-toggle="pill" href="#profile-info">
+                                    <i class="fa fa-user mr-2"></i>Личная информация
+                                </a>
+                                <a class="nav-link" data-toggle="pill" href="#privacy-settings">
+                                    <i class="fa fa-lock mr-2"></i>Приватность
+                                </a>
+                                <a class="nav-link" data-toggle="pill" href="#password-change">
+                                    <i class="fa fa-key mr-2"></i>Смена пароля
+                                </a>
+                                <a class="nav-link text-danger" data-toggle="pill" href="#account-delete">
+                                    <i class="fa fa-trash mr-2"></i>Удаление аккаунта
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="tab-content">
+                                <!-- Личная информация -->
+                                <div class="tab-pane fade show active" id="profile-info">
+                                    <h4>Личная информация</h4>
+                                    <form method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        {{ profile_form.as_p }} <button type="submit" name="profile_update" class="btn btn-primary">Сохранить изменения</button>
+                                    </form>
+                                </div>
+                                <!-- Приватность -->
+                                <div class="tab-pane fade" id="privacy-settings">
+                                    <h4>Настройки приватности</h4>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ privacy_form.as_p }}
+                                        <button type="submit" name="privacy_update" class="btn btn-primary">Сохранить изменения</button>
+                                    </form>
+                                </div>
+                                <!-- Смена пароля -->
+                                <div class="tab-pane fade" id="password-change">
+                                    <h4>Смена пароля</h4>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        {{ password_form.as_p }}
+                                        <button type="submit" name="password_change" class="btn btn-primary">Изменить пароль</button>
+                                    </form>
+                                </div>
+                                <!-- Удаление аккаунта -->
+                                <div class="tab-pane fade" id="account-delete">
+                                    <h4>Удаление аккаунта</h4>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <p>Вы уверены, что хотите удалить свой аккаунт? Это действие необратимо.</p>
+                                        <button type="submit" class="btn btn-danger">Удалить аккаунт</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
