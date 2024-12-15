@@ -2,6 +2,7 @@ from django import forms
 from movie_app.models import Comments, Profile, Viewing
 from django.contrib.auth.models import User
 from django.core.validators import MinLengthValidator
+from django.contrib.auth import authenticate
 
 from django.core.exceptions import ValidationError
 
@@ -48,8 +49,20 @@ class UserSignUpForm(forms.ModelForm):
         return cleaned_data
 
 class UserLoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(label="Имя пользователя", max_length=150, required=True)
+    password = forms.CharField(label="Пароль", widget=forms.PasswordInput, required=True)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is None:
+                raise forms.ValidationError("Неверное имя пользователя или пароль.")
+        return cleaned_data
+
 
 class ProfileUpdateForm(forms.ModelForm):
     instagram = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Please write your instagram username'}),required=False)

@@ -25,36 +25,6 @@
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
     
-    <style>
-        .social-login {
-            margin-top: 20px;
-        }
-        .social-login .btn {
-            margin: 0 10px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            color: #fff;
-            transition: all 0.3s ease;
-        }
-        .social-login .btn-google {
-            background-color: #db4437;
-        }
-        .social-login .btn-google:hover {
-            background-color: #c23321;
-        }
-        .social-login .btn-facebook {
-            background-color: #3b5998;
-        }
-        .social-login .btn-facebook:hover {
-            background-color: #2d4373;
-        }
-        .social-login .btn-github {
-            background-color: #333;
-        }
-        .social-login .btn-github:hover {
-            background-color: #222;
-        }
-    </style>
 </head>
 
 <body>
@@ -92,19 +62,25 @@
                             {% csrf_token %}
                             {% if form.errors %}
                                 <div class="alert alert-danger">
-                                    Неверное имя пользователя или пароль
+                                    <ul>
+                                        {% for field, errors in form.errors.items %}
+                                            <li><strong>Ошибка:</strong> {{ errors|join:", " }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    <p>Пожалуйста, исправьте ошибки и попробуйте снова.</p>
                                 </div>
                             {% endif %}
                             <div class="input__item">
-                                <input type="text" placeholder="Username" name="username" required>
+                                <input type="text" placeholder="Имя пользователя" name="username" required>
                                 <span class="icon_mail"></span>
                             </div>
                             <div class="input__item">
-                                <input type="password" placeholder="Password" name="password" required>
+                                <input type="password" placeholder="Пароль" name="password" required>
                                 <span class="icon_lock"></span>
                             </div>
-                            <button type="submit" class="site-btn">Login Now</button>
+                            <button type="submit" class="site-btn">Войти</button>
                         </form>
+                        
                         
                     </div>
                 </div>
@@ -132,17 +108,6 @@
     <!-- Footer Section Begin -->
     {% include 'components/footer.html' %}
     <!-- Footer Section End -->
-
-    <!-- Search model Begin -->
-    <div class="search-model">
-        <div class="h-100 d-flex align-items-center justify-content-center">
-            <div class="search-close-switch"><i class="icon_close"></i></div>
-            <form class="search-model-form" action="0" method="get">
-                <input type="text" id="search-input" name="search" placeholder="Search here.....">
-            </form>
-        </div>
-    </div>
-    <!-- Search model end -->
 
     <!-- Js Plugins -->
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

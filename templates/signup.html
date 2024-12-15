@@ -8,7 +8,7 @@
     <meta name="keywords" content="Anime, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up</title>
+    <title>Регистрация</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -36,87 +36,72 @@
     {% include 'components/header.html' %}
     <!-- Header End -->
 
-    <!-- Normal Breadcrumb Begin -->
-    <section class="normal-breadcrumb set-bg" data-setbg="{% static 'img/bg.jpg' %}">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="normal__breadcrumb__text">
-                        <h2 style="color: white; text-shadow: 2px 2px 4px #000000;">Регистрация</h2>
+        <section class="signup spad">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="login__form">
+                            <h3>Регистрация</h3>
+                            <form action="{% url 'movie_app:signup' %}" method="post">
+                                {% csrf_token %}
+                                <div class="input__item">
+                                    <input type="email" placeholder="Электронный адрес" name="email" value="{{ form.email.value|default:'' }}" required>
+                                    <span class="icon_mail"></span>
+                                    {% if form.email.errors %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ form.email.errors|join:" " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="input__item">
+                                    <input type="text" placeholder="Ваше имя" name="name" value="{{ form.name.value|default:'' }}" required>
+                                    <span class="icon_profile"></span>
+                                    {% if form.name.errors %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ form.name.errors|join:" " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="input__item">
+                                    <input type="text" placeholder="Имя пользователя" name="username" value="{{ form.username.value|default:'' }}" required>
+                                    <span class="icon_profile"></span>
+                                    {% if form.username.errors %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ form.username.errors|join:" " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="input__item">
+                                    <input type="password" placeholder="Пароль" name="password" required>
+                                    <span class="icon_lock"></span>
+                                    {% if form.password.errors %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ form.password.errors|join:" " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="input__item">
+                                    <input type="password" placeholder="Подтвердите пароль" name="confirm_password" required>
+                                    <span class="icon_lock"></span>
+                                    {% if form.confirm_password.errors %}
+                                        <div class="alert alert-danger mt-2">
+                                            {{ form.confirm_password.errors|join:" " }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <button type="submit" class="site-btn">Зарегистрироваться</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Normal Breadcrumb End -->
-
-    <!-- Signup Section Begin -->
-    <section class="signup spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="login__form">
-                        <h3>Регистрация</h3>
-                        <form action="{% url 'movie_app:signup' %}" method="post">
-                            {% csrf_token %}
-                            <div class="input__item">
-                                <input type="email" placeholder="Электренный адрес" name="email" required>
-                                <span class="icon_mail"></span>
-                                {% if form.email.errors %}
-                                    <div class="error">{{ form.email.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="input__item">
-                                <input type="text" placeholder="Ваше имя" name="name" required>
-                                <span class="icon_profile"></span>
-                                {% if form.name.errors %}
-                                    <div class="error">{{ form.name.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="input__item">
-                                <input type="text" placeholder="Ваш имя пользователя" name="username" required>
-                                <span class="icon_profile"></span>
-                                {% if form.username.errors %}
-                                    <div class="error">{{ form.username.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="input__item">
-                                <input type="password" placeholder="Пароль" name="password" required>
-                                <span class="icon_lock"></span>
-                                {% if form.password.errors %}
-                                    <div class="error">{{ form.password.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="input__item">
-                                <input type="password" placeholder="Пароль" name="confirm_password" required>
-                                <span class="icon_lock"></span>
-                                {% if form.password.errors %}
-                                    <div class="error">{{ form.password.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <button type="submit" class="site-btn">Зарегестрироваться</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="login__register">
-                        <h3>УЖЕ ЕСТЬ АККАУНТ?</h3>
-                        <a href="{% url 'movie_app:login' %}" class="primary-btn">Войдите сейчас!</a>
-                        
-                        <!-- Дополнительная информация -->
-                        <div class="mt-4" style="color: #fff;">
-                            <p style="color: #fff;">Вход займет всего минуту. Создайте аккаунт и получите доступ ко всем функциям платформы!</p>
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-check text-success mr-2"></i>Персонализированные рекомендации</li>
-                                <li><i class="fa fa-check text-success mr-2"></i>Сохранение избранного</li>
-                                <li><i class="fa fa-check text-success mr-2"></i>Эксклюзивный контент</li>
-                            </ul>
+                    <div class="col-lg-6">
+                        <div class="login__register">
+                            <h3>Уже есть аккаунт?</h3>
+                            <a href="{% url 'movie_app:login' %}" class="primary-btn">Войдите сейчас!</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
     {% include 'components/footer.html' %}
 
