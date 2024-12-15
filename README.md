@@ -1,4 +1,4 @@
-# Django Movie App Project
+![image](https://github.com/user-attachments/assets/86f507df-38c6-44e5-a9e3-88a3dbedf1ab)![image](https://github.com/user-attachments/assets/d68d3d21-c19e-4836-8bf3-9721bc978e3f)# Django Movie App Project
 
 ## General Overview
 
@@ -18,9 +18,9 @@ Navigation through the website is facilitated by a navbar and sidebars on variou
 ### 2. Authentication
 
 - **Signup**: Users can sign up via the 'Become a Member' section in the navbar, which redirects them to the signup page. Post-registration, users are directed to the login screen.
-- **Viewing Movies**: Movies can be viewed by any visitor without the need for registration.
+- **Viewing Movies**: Movies can be viewed by any registered user.
 - **Commenting**: To comment on movies, users must sign up and log in.
-- **Visibility of Comments**: Unregistered users can view comments but cannot see the comment section on movie detail pages.
+- **Visibility of Comments**: Unregistered users can view comments but cannot leave it.
 - **Profile Access**: All users, regardless of login status, can view individual user profiles.
 - **Profile Editing**: Logged-in users can edit their profiles, including avatars, information, and social links.
 
@@ -118,25 +118,26 @@ If you are using SQLITE database, there may be crashes from time to time due to 
 ## Some Screenshots from Project
 
 ### Homepage and Sidebar
-![Movie-Project-Homepage](https://i.imgur.com/SAxkvL0.png)
+![Movie-Project-Homepage](https://i.ibb.co/pJmzgKj/2024-12-15-143842.png)
 
 ## Movie Detail Page
 
-![Django-Movie-App Project Movie Detail](https://i.imgur.com/rK7dx4O.png)
+![Django-Movie-App Project Movie Detail](https://i.ibb.co/P4GYHsb/2024-12-15-151047.png)
 
 
-## Movie Detail Comment Section
+## New Profile Page
 
-![Movie Detail Comment Section](https://i.imgur.com/7irgobR.png)
+![New Profile Page](https://i.ibb.co/fN2M8Lj/2024-12-15-150841.png)
 
 
-## User Profile Pages (For User Himself)
-![Profile Page of User](https://i.imgur.com/5y3cgiT.png)
+## User Profile Pages
 
-### Other User's Profile Page Example
+![Profile Page of User](https://i.ibb.co/ccbmSV9/2024-12-15-151107.png)
 
-![Other Users Profile Detail Pages](https://i.imgur.com/FPosFdg.png)
+### Log in
+
+![Log In](https://i.ibb.co/rtBR5H6/2024-12-15-150740.png)
 
 ### Signup Page (Only non logged in users can see)
 
-![](https://i.imgur.com/M8eRJ4e.png)
+![](https://i.ibb.co/d59tBk2/2024-12-15-150732.png)
